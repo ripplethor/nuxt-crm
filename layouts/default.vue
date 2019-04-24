@@ -110,7 +110,7 @@
         miniVariant: true,
         right: true,
         rightDrawer: false,
-        title: 'Vuetify.js'
+        title: 'Nuxt-CRM'
       }
     }
   }
