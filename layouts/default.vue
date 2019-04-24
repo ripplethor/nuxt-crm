@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app :dark="isDark">
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -65,16 +65,22 @@
     <v-navigation-drawer
       v-model="rightDrawer"
       :right="right"
-      temporary
       fixed
     >
       <v-list>
-        <v-list-tile @click.native="right = !right">
+        <v-list-tile>
           <v-list-tile-action>
-            <v-icon light>compare_arrows</v-icon>
+            <v-icon>build</v-icon>
           </v-list-tile-action>
-          <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
+          <v-list-tile-title>
+            Einstellungen</v-list-tile-title>
         </v-list-tile>
+        <v-container fluid>
+          <v-switch ligth
+                    label="Toggle dark them"
+                    v-model="isDark"
+          ></v-switch>
+        </v-container>
       </v-list>
     </v-navigation-drawer>
     <v-footer
@@ -90,6 +96,7 @@
   export default {
     data() {
       return {
+        isDark: false,
         clipped: false,
         drawer: false,
         fixed: false,
