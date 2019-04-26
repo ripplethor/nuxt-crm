@@ -27,7 +27,7 @@
 <script>
     export default {
       layout: "empty",
-      middleware:['admin-auth']
+      //middleware:['admin-auth']
     }
 </script>
 
