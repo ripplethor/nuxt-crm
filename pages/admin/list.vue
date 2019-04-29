@@ -12,15 +12,21 @@
         <td>{{ new Date(props.item.date).toLocaleString('de-DE', dateDetail) }}</td>
         <td>{{ props.item.views }}</td>
         <td>{{ props.item.comments.length }}</td>
-        <td>
-          <v-btn color="primary" fab small dark>
-            <v-icon>edit</v-icon>
-          </v-btn>
-        </td>
-        <td>
-          <v-btn color="error" fab small dark>
-            <v-icon>delete</v-icon>
-          </v-btn>
+
+        <td class="justify-center layout px-0">
+          <v-icon
+            small
+            class="mr-2"
+            @click="open(props.item.id)"
+          >
+            edit
+          </v-icon>
+          <v-icon
+            small
+            @click="remove(props.item.id)"
+          >
+            delete
+          </v-icon>
         </td>
       </template>
       console.log(posts)
@@ -56,15 +62,33 @@ export default {
           text: "Name",
           align: "left",
           sortable: false,
-          prop: "title"
+					prop: "title",
+					value: 'title'
         },
-        { text: "Date", prop: "date" },
-        { text: "Views", prop: "views" },
-        { text: "Comments", prop: "comments" },
-        { sortable: false, text: "Edit" },
-        { sortable: false, text: "Delete" }
+        { text: "Date", prop: "date",
+					value: 'date' },
+        { text: "Views", prop: "views",
+					value: 'views' },
+        { text: "Comments", prop: "comments",
+					value: 'comments' },
+        { sortable: false, text: "Actions",
+					value: 'actions' },
       ]
     };
-  }
+	},
+	methods: {
+		open(id){
+			this.$router.push(`/admin/post/${id}`)
+		},
+		async remove (id) {
+			try{
+				const index = await this.posts.filter(p => p.id !== id)
+				confirm(`Are you sure you want to delete this id: ${id}?`) && this.posts.splice(index, 1)
+				await this.$store.dispatch('post/remove', id)
+			} catch (e){
+				
+			}
+		}
+	}
 };
 </script>
