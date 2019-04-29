@@ -60,6 +60,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+
     <v-content>
       <v-container>
         <nuxt />
