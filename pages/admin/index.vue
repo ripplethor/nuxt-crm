@@ -3,12 +3,11 @@
 </template>
 
 <script>
-  export default {
-    layout: 'admin',
-    //middleware:['admin-auth']
-  }
+export default {
+  middleware: ["admin-auth"],
+  layout: "admin"
+};
 </script>
 
 <style scoped>
-
 </style>

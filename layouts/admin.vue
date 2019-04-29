@@ -1,5 +1,9 @@
 <template>
   <v-app :dark="isDark">
+    <v-snackbar :timeout="4000" top color="primary" v-model="snackbar">
+      {{msg}}
+      <v-btn @click="snackbar=false" dark>Close</v-btn>
+    </v-snackbar>
     <v-toolbar :clipped-left="clipped" app>
       <v-btn icon @click="drawer = !drawer">
         <v-icon>{{ `${drawer ? 'more_vert' : 'menu'}` }}</v-icon>
@@ -8,9 +12,8 @@
         <v-icon v-if="drawer">{{ `chevron_${miniVariant ? 'right' : 'left'}` }}</v-icon>
       </v-btn>
 
-
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
+      <v-toolbar-title v-text="title"/>
+      <v-spacer/>
 
       <v-menu>
         <template #activator="{ on: menu }">
@@ -24,7 +27,7 @@
           </v-tooltip>
         </template>
         <v-list>
-          <v-list-tile v-for="(item, index) in items" :key="index" @click="">
+          <v-list-tile v-for="(item, index) in items" :key="index" @click>
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile>
         </v-list>
@@ -38,7 +41,7 @@
 
     <v-content>
       <v-container>
-        <nuxt />
+        <nuxt/>
       </v-container>
     </v-content>
 
@@ -48,8 +51,7 @@
           <v-list-tile-action @click="rightDrawer=null">
             <v-icon>close</v-icon>
           </v-list-tile-action>
-          <v-list-tile-title>
-            Einstellungen</v-list-tile-title>
+          <v-list-tile-title>Einstellungen</v-list-tile-title>
         </v-list-tile>
         <v-container fluid>
           <v-switch ligth label="Toggle dark them" v-model="isDark"></v-switch>
@@ -64,34 +66,42 @@
 
 
 <script>
-  import AppAside from '@/components/admin/Aside'
-  export default {
-    data() {
-      return {
-        isDark: false,
-        clipped: false,
-        drawer: true,
-        fixed: false,
-        items: [
-          {
-            icon: 'apps',
-            title: 'Welcome',
-            to: '/'
-          },
-          {
-            icon: 'bubble_chart',
-            title: 'Inspire',
-            to: '/inspire'
-          }
-        ],
-        miniVariant: true,
-        right: true,
-        rightDrawer: false,
-        title: 'Nuxt-CRM'
-      }
-    },
-    components: {
-      AppAside
+import AppAside from "@/components/admin/Aside";
+export default {
+  data() {
+    return {
+      msg: "",
+      snackbar: false,
+      isDark: false,
+      clipped: false,
+      drawer: true,
+      fixed: false,
+      items: [
+        {
+          icon: "apps",
+          title: "Welcome",
+          to: "/"
+        },
+        {
+          icon: "bubble_chart",
+          title: "Inspire",
+          to: "/inspire"
+        }
+      ],
+      miniVariant: true,
+      right: true,
+      rightDrawer: false,
+      title: "Nuxt-CRM"
+    };
+  },
+  components: {
+    AppAside
+  },
+  watch: {
+    error(value) {
+      this.msg = value;
+      this.snackbar = true;
     }
   }
+};
 </script>
