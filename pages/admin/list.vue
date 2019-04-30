@@ -13,8 +13,8 @@
         <td>{{ props.item.views }}</td>
         <td>{{ props.item.comments.length }}</td>
         <td class="justify-center layout px-0">
-          <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-          <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+          <v-icon small class="mr-2" @click="editItem(props.item.id)">edit</v-icon>
+          <v-icon small @click="deleteItem(props.item.id)">delete</v-icon>
         </td>
       </template>
       console.log(posts)
@@ -59,6 +59,18 @@ export default {
         { sortable: false, text: "Actions" }
       ]
     };
+  },
+  methods: {
+    async editItem(id) {
+      this.$router.push(`/admin/post/${id}`);
+    },
+    async deleteItem(id) {
+      try {
+        const index = await this.posts.indexOf(id);
+        confirm(`Delete Post with ID ${id} ?`) && this.posts.splice(index, 1);
+        await this.$store.dispatch("post/deleteItem", id);
+      } catch (e) {}
+    }
   }
 };
 </script>
